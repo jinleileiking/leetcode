@@ -5,84 +5,74 @@ func isNStraightHand(hand []int, W int) bool {
 	if W == 1 {
 		return true
 	}
+	// sort the hand
 
-	tmpArr := hand
+	sorted := []int{}
+	var ret bool
 
+	sorted = Heapsort(hand)
+
+	// spew.Dump(sorted)
 	for {
-		// spew.Dump(tmpArr)
-		// get max
-		max := GetMax(tmpArr)
-		// spew.Dump(max)
 
-		if hasW(hand, W, max) {
-			tmpArr = cutW(tmpArr, W, max)
-		} else {
+		//get W
+
+		ret, sorted = getW(sorted, W)
+		// spew.Dump(ret, sorted)
+
+		if !ret {
 			return false
 		}
 
-		if len(tmpArr) == 0 {
-			return true
-		}
-
-		if len(tmpArr) < W {
-			return false
-		}
-	}
-
-}
-func hasW(arr []int, W int, max int) bool {
-
-	// ret := []int{}
-
-	for i := 0; i < W; i++ {
-		var found bool
-		for _, v := range arr {
-			if v == max-i {
-				found = true
-				break
-			}
-		}
-
-		if !found {
-			return false
+		if len(sorted) == 0 {
+			break
 		}
 	}
 
 	return true
+
 }
 
-func cutW(arr []int, W int, max int) []int {
+func getW(arr []int, W int) (bool, []int) {
 
+	var last int
+	var gotCnt int
 	ret := []int{}
-	got := []int{}
-
-	for _, v := range arr {
-		// spew.Dump(v, ret)
-		if v <= max && v > max-W {
-			goted := false
-			for _, gotItem := range got {
-				if v == gotItem {
-					goted = true
-					break
-				}
-			}
-
-			if goted {
-				ret = append(ret, v)
-				continue
-			}
-			got = append(got, v)
+	last = arr[0]
+	arr = arr[1:]
+	for k, v := range arr {
+		// spew.Dump(k, v, ret)
+		if last == v {
+			ret = append(ret, v)
 			continue
 		}
+		if v != last-1 {
+			return false, nil
+		}
+		//got it
+		last = v
+		gotCnt++
+		if gotCnt == W-1 {
+			// spew.Dump(arr[k+1:])
+			// add tail
+			if k < len(arr)-1 {
+				ret = append(ret, arr[k+1:]...)
+			}
+			return true, ret
+		}
 
-		ret = append(ret, v)
 	}
-
-	return ret
+	return false, nil
 }
 
-func GetMax(arr []int) int {
-	return Heapify(arr)[0]
+func Heapsort(arr []int) []int {
+	final := []int{}
+	for len(arr) != 0 {
+		ret := Heapify(arr)
+		final = append(final, ret[0])
+		arr = arr[1:]
+	}
+	return final
 }
 
 func Heapify(arr []int) []int {
