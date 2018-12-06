@@ -9,6 +9,7 @@ func lengthOfLongestSubstring(s string) int {
 	}
 	max := 0
 	for p, _ := range s {
+		// spew.Dump(s[p:], max)
 		max = find(s[p:], max)
 	}
 
@@ -21,31 +22,23 @@ func lengthOfLongestSubstring(s string) int {
 
 func find(s string, curMax int) int {
 	var stat map[rune]bool
-	var max int
 	stat = make(map[rune]bool)
 
-	var kfinal int
 	for k, v := range s {
-		kfinal = k
+		// spew.Dump(k)
 		if _, exists := stat[v]; exists {
 			// repeated
-			if k > max {
-				max = k
+			if k >= curMax {
+				return k
 			}
-			break
+			return curMax
 		} else {
 			stat[v] = true
 		}
 	}
 
-	if kfinal == len(s)-1 {
-		if len(s) > curMax {
-			return len(s)
-		}
-	}
-
-	if max > curMax {
-		return max
+	if len(s) > curMax {
+		return len(s)
 	}
 
 	return curMax

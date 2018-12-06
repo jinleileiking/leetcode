@@ -14,7 +14,7 @@ func TestLong(t *testing.T) {
 
 func TestMain(t *testing.T) {
 
-	spew.Dump(find("abcabcbb", 0))
+	assert.Equal(t, 3, find("abcabcbb", 3), "they should be equal")
 }
 
 func TestLong1(t *testing.T) {
@@ -39,4 +39,17 @@ func TestMain2(t *testing.T) {
 func TestLong3(t *testing.T) {
 
 	assert.Equal(t, 2, lengthOfLongestSubstring("aab"), "they should be equal")
+}
+
+func TestLong4(t *testing.T) {
+
+	assert.Equal(t, 3, lengthOfLongestSubstring("pwwkew"), "they should be equal")
+}
+
+func TestMain4(t *testing.T) {
+
+	assert.Equal(t, 2, find("wwkew", 2), "bbbbb they should be equal")
+	assert.Equal(t, 3, find("wkew", 2), "bbbbb they should be equal")
+	assert.Equal(t, 3, find("kew", 3), "bbbbb they should be equal")
+	assert.Equal(t, 3, find("ew", 3), "bbbbb they should be equal")
 }
