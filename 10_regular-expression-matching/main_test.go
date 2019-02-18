@@ -32,4 +32,5 @@ func TestMain(t *testing.T) {
 	assert.Equal(t, true, isMatchInner("ssis", "s*is"))
 	assert.Equal(t, true, isMatch("mississippi", "mis*is*ip*."))
 	assert.Equal(t, false, isMatch("ab", ".*c"))
+	assert.Equal(t, false, isMatch("aaaa", "aaaaa"))
 }

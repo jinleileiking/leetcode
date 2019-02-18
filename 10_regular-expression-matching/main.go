@@ -55,6 +55,31 @@ func isMatchInner(s string, p string) bool {
 			}
 			if lastChar == '.' {
 				// .* matches anything
+				// should check the latter char
+				// aaaabbbc
+				// .*c
+				// move the str to next, keep the pattern pos
+
+				if patternPos == len(p)-1 {
+					return true
+				}
+
+				if p[patternPos+1] != '*' {
+					if p[patternPos+1] == s[strPos] {
+						// found
+						patternPos = patternPos + 2
+						strPos++
+						continue
+					}
+
+					// source is done, but cannot find pattern
+
+					if strPos == len(s)-1 {
+						return false
+					}
+				}
+
+				//TODO: other cases
 				return true
 			}
 			if lastChar != c {
@@ -69,6 +94,14 @@ func isMatchInner(s string, p string) bool {
 			// spew.Dump(string(lastChar))
 		}
 	}
+
+	// spew.Dump(patternPos, lastChar)
+	// if patternPos <= len(p)-1 {
+	// 	if p[patternPos] != '*' || p[patternPos] != lastChar {
+	// 		// spew.Dump(p[patternPos+1])
+	// 		return false
+	// 	}
+	// }
 
 	return true
 }
