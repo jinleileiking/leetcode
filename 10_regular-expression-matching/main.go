@@ -96,12 +96,12 @@ func isMatchInner(s string, p string) bool {
 	}
 
 	// spew.Dump(patternPos, lastChar)
-	// if patternPos <= len(p)-1 {
-	// 	if p[patternPos] != '*' || p[patternPos] != lastChar {
-	// 		// spew.Dump(p[patternPos+1])
-	// 		return false
-	// 	}
-	// }
+	if patternPos <= len(p)-1 {
+		if p[patternPos] != '*' && p[patternPos] != '.' && p[patternPos] != lastChar {
+			// spew.Dump(p[patternPos+1])
+			return false
+		}
+	}
 
 	return true
 }
