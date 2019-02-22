@@ -11,6 +11,7 @@ func TestMain(t *testing.T) {
 	// assert.Equal(t, "1230", multiply("123", "10"))
 	// assert.Equal(t, "144", multiply("12", "12"))
 	assert.Equal(t, "56088", multiply("123", "456"))
+	assert.Equal(t, "0", multiply("123", "0"))
 }
 
 func TestReverse(t *testing.T) {

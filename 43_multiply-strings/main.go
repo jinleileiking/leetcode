@@ -14,6 +14,9 @@ func reverse(src string) string {
 }
 func multiply(num1 string, num2 string) string {
 
+	if num1 == "0" || num2 == "0" {
+		return "0"
+	}
 	num1 = reverse(num1)
 	num2 = reverse(num2)
 
@@ -30,7 +33,9 @@ func multiply(num1 string, num2 string) string {
 			high := mul / 10
 			low := mul % 10
 
+			// if low != 0 {
 			dst[k1+k2] = dst[k1+k2] + low
+			// }
 			if high != 0 {
 				dst[k1+k2+1] = dst[k1+k2+1] + high
 			}
@@ -76,6 +81,10 @@ func multiply(num1 string, num2 string) string {
 		// spew.Dump(string(strconv.Itoa(val)[0]))
 		ret[pos] = byte(strconv.Itoa(val)[0])
 	}
+
+	// if string(ret) == "\x00" || string(ret) == "" {
+	// 	return "0"
+	// }
 	return reverse(string(ret))
 }
 
