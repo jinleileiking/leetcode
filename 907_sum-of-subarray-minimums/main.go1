@@ -1,0 +1,36 @@
+package main
+
+func min(arr []int) int {
+	var min int
+	min = arr[0]
+
+	for _, v := range arr {
+		if v < min {
+			min = v
+		}
+	}
+
+	return min
+}
+
+func genSubs(A []int) [][]int {
+	var ret [][]int
+	for k1, _ := range A {
+		for k2 := k1; k2 < len(A); k2++ {
+			ret = append(ret, A[k1:k2+1])
+		}
+	}
+
+	return ret
+}
+
+func sumSubarrayMins(A []int) int {
+
+	ret := 0
+	subs := genSubs(A)
+	for _, v := range subs {
+		ret = ret + min(v)
+	}
+
+	return ret % (1e9 + 7)
+}
