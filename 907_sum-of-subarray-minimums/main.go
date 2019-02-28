@@ -49,15 +49,16 @@ func findEdge(A []int, pos int) (left, right int) {
 		}
 		right = p
 	}
-	if p == len(A)-1 {
+	if p == len(A) {
 		right = len(A) - 1
+		return
 	}
 
 	return
 }
 
 func calc(pos, left, right, m int) int {
-	return m * ((pos - left) * (right - pos + 1))
+	return m * ((pos - left + 1) * (right - pos + 1))
 }
 
 func sumSubarrayMins(A []int) int {
@@ -70,14 +71,20 @@ func sumSubarrayMins(A []int) int {
 			break
 		}
 
+		// spew.Dump(m, mPoses)
 		for _, pos := range mPoses {
 			left, right := findEdge(A, pos)
+			// spew.Dump(ret)
+			// spew.Dump(pos, left, right, m)
 			ret += calc(pos, left, right, m)
+			A[pos] = 0
+			// spew.Dump(ret)
 		}
 
-		for _, pos := range mPoses {
-			A[pos] = 0
-		}
+		// spew.Dump(ret)
+		// for _, pos := range mPoses {
+		// 	A[pos] = 0
+		// }
 	}
 
 	return ret
