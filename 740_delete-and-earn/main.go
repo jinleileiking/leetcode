@@ -11,3 +11,9 @@ func deleteAndEarn(nums []int) int {
 	}
 
 }
+
+func pick(nums []int) int {
+
+	func pick(nums []int) int {
+	}
+}

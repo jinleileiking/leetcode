@@ -8,6 +8,6 @@ import (
 
 func TestMain(t *testing.T) {
 
-	assert.Equal(t, 6, deleteAndEarn([]int{3, 4, 2}))
-	assert.Equal(t, 9, deleteAndEarn([]int{2, 2, 3, 3, 3, 4}))
+	assert.Equal(t, 1, deleteAndEarn([]int{1, 2, 2}))
+	assert.Equal(t, 6, deleteAndEarn([]int{3, 2, 1, 2, 1, 7}))
 }
