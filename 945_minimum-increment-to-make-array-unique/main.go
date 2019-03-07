@@ -1,31 +1,23 @@
 package main
 
 func minIncrementForUnique(A []int) int {
+
+	m := make(map[int]bool)
 	cnt := 0
-
-	changed := true
-	for {
-		changed, A = findAndChange(A)
-		if changed {
-			cnt++
-		} else {
-			break
-		}
-
+	for _, v := range A {
+		cnt = checkMap(v, m, cnt)
 	}
 
 	return cnt
 }
 
-func findAndChange(A []int) (bool, []int) {
-	for k1, v1 := range A {
-		for k2 := k1 + 1; k2 < len(A); k2++ {
-			if v1 == A[k2] {
-				A[k2] = A[k2] + 1
-				return true, A
-			}
-		}
+func checkMap(a int, m map[int]bool, cnt int) int {
+	if found := m[a]; found {
+		cnt++
+		return checkMap(a+1, m, cnt)
+	} else {
+		m[a] = true
 	}
 
-	return false, A
+	return cnt
 }
