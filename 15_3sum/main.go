@@ -9,8 +9,8 @@ import (
 
 func threeSum(nums []int) [][]int {
 
-	// ret := [][]int{}
-	foundKeys := []int{}
+	ret := [][]int{}
+	// foundKeys := []int{}
 
 	m := make(map[int][][]int)
 	for k1, v1 := range nums {
@@ -19,8 +19,11 @@ func threeSum(nums []int) [][]int {
 
 			if _, ok := m[v2]; ok {
 				//found
-				// ret = insert(ret, v2, m[v2])
-				foundKeys = append(foundKeys, v2)
+				ret = insert(ret, v2, m[v2])
+				//del
+
+				spew.Dump(m, v2)
+				delete(m, v2)
 			}
 
 			// not found, save map   5 --> -1, -4,  -2, -3
@@ -29,10 +32,30 @@ func threeSum(nums []int) [][]int {
 		}
 	}
 
-	spew.Dump(m)
-	spew.Dump(foundKeys)
+	return ret
+}
+func insert(ret [][]int, v int, as [][]int) [][]int {
 
-	return genRet(m, foundKeys)
+	// sort
+
+	for _, a := range as {
+		t := []int{v, a[0], a[1]}
+		sort.Slice(t, func(i int, j int) bool { return t[i] < t[j] })
+
+		found := false
+		for _, v := range ret {
+			if reflect.DeepEqual(t, v) {
+				found = true
+				break
+			}
+		}
+
+		if !found {
+			ret = append(ret, t)
+		}
+	}
+
+	return ret
 }
 
 func genRet(m map[int][][]int, foundKeys []int) [][]int {
@@ -61,20 +84,3 @@ func genRet(m map[int][][]int, foundKeys []int) [][]int {
 
 	return ret
 }
-
-// func insert(ret [][]int, v []int) [][]int {
-
-// 	// sort
-
-// 	a := []int{k1, k2, k3}
-// 	sort.Slice(a, func(i int, j int) bool { return a[i] < a[j] })
-
-// 	for _, v := range ret {
-// 		if reflect.DeepEqual(a, v) {
-// 			return ret
-// 		}
-// 	}
-
-// 	ret = append(ret, a)
-// 	return ret
-// }
