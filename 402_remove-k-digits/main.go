@@ -6,6 +6,7 @@ func removeKdigits(num string, k int) string {
 	deleted := 0
 	// found1st0 := false
 	for _, v := range num {
+		// spew.Dump(deleted)
 
 		// first
 		if byte(last) == 0 {
@@ -37,11 +38,13 @@ func removeKdigits(num string, k int) string {
 				deleted = k
 			} else {
 				// k >=  len ret
+				// ret -> 11234  -> 5
 				// 112340       8
 				// 00000         deleted = 5
 
+				// 10
+				deleted += len(ret)
 				ret = ""
-				deleted += k - len(ret)
 				last = 0
 
 				// spew.Dump(deleted, k)
@@ -97,6 +100,7 @@ func removeKdigits(num string, k int) string {
 		return "0"
 	}
 
+	// spew.Dump(deleted)
 	if deleted < k {
 		// 1111111, 3
 		// 0123
